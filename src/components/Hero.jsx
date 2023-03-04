@@ -1,20 +1,28 @@
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { Transition } from "@headlessui/react";
+import CartCard from '@/components/CartCard'
 
-const Hero = () => {
+const Hero = ({cart, quantity, removeFromCart}) => {
   const [cartToggle, isCartToggle] = useState(false)
   const handleCart = () => {
     isCartToggle(!cartToggle)
   }
 
-  console.log(cartToggle)
+  console.log({cart})
+
   return (
     <div className="relative w-full">
+
+
       <nav className="fixed z-10 w-full bg-[#002F35] md:absolute ">
         <div className="container m-auto px-2 md:px-12 lg:px-7">
           <div className="flex flex-wrap items-center justify-between py-3 gap-6 md:py-4 md:gap-0">
             <div className="w-full px-6 flex justify-between lg:w-max md:px-0">
-              <a
+              <Link
                 href="/"
                 aria-label="logo"
                 className="flex space-x-2 items-center"
@@ -29,7 +37,7 @@ const Hero = () => {
                 <span className="text-2xl font-bold text-[#FFA323]">
                   Smart <span className="text-[#FF6337]">Restaurant</span>
                 </span>
-              </a>
+              </Link>
 
               <button
                 aria-label="humburger"
@@ -53,8 +61,8 @@ const Hero = () => {
               <div className="text-[#FFA323]  lg:pr-4">
                 <ul className="space-y-6 tracking-wide font-medium text-sm md:flex md:space-y-0">
                   <li>
-                    <button onClick={() => handleCart()} className="block md:px-4 transition hover:text-yellow-700">
-                      <span>Cart</span>
+                    <button onClick={() => handleCart()} className="block md:px-4 transition text-2xl hover:text-yellow-700">
+                      <span className="font-bold">Carrito ({quantity})</span> 
                     </button>
                   </li>
                 </ul>
@@ -63,6 +71,29 @@ const Hero = () => {
           </div>
         </div>
       </nav>
+      
+     <Transition show={cartToggle} className="absolute z-50 bg-[#FF6337]/90 right-0 w-1/4 flex flex-col h-screen"
+     enter="transition ease-in-out duration-300"
+     enterFrom="translate-x-full"
+     enterTo="translate-x-0 "
+     leave="transition ease-in-out duration-300"
+     leaveFrom=" translate-x-0"
+     leaveTo=" translate-x-full">
+ 
+        <button onClick={() => handleCart()} className="block pt-6 transition text-2xl hover:text-yellow-700">
+          <span className="font-bold">Carrito ({quantity})</span> 
+        </button>
+        <div className="flex flex-col w-full bg-white/50 h-full gap-y-5">
+        {
+          cart.map( cart => (
+            <CartCard key={cart.id} cart={cart} dishPrice={cart.precio} dishImg={cart.imagenes.normal} removeFromCart={removeFromCart}  dishName={cart.nombre}/>
+          ))
+        }
+        </div>
+
+     </Transition>
+      
+    
       <div className="relative bg-[#004A2F]">
         <div className="container m-auto px-6 pt-32 md:px-12 lg:pt-[4.8rem] lg:px-7">
           <div className="flex items-center flex-wrap px-2 md:px-0">

@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 import getData from '@/services/getCategories'
 import Category from '@/components/Category'
 import DishCard from './DishCard';
-const Menu = () => {
+
+
+const Menu = ({addToCart}) => {
     const [data, setData] = useState('')
-    const [cart, setCart] = useState([])
+    
     const [categories, setCategories] = useState('')
 
     const fetchData = async () => {
@@ -13,17 +15,14 @@ const Menu = () => {
         setData(response)
     }
 
-    const addToCart = (product) => {
-        setCart([...cart, product])
-    }
-    
-    console.log(cart)
+   
 
     useEffect(() => {
         fetchData()
     }, [])
   return (
     <div className='flex h-full'>
+        
         <div className="flex flex-col w-1/4 h-full items-center gap-y-8 pb-4 border-r-4 border-r-[#002F35]">
             <h1 className="font-bold font-mohr text-5xl text-center pt-10  ">Categorias</h1>
             {data.length > 0 ? (
