@@ -36,7 +36,7 @@ const Menu = ({addToCart}) => {
             }
         </div>
         <div className="flex flex-col w-full h-full pt-36">
-            <h1 className="font-bold font-mohr text-5xl pl-10 ">Menu's</h1>
+            <h1 className="font-bold font-mohr text-5xl pl-10 ">Menus</h1>
             <div className="grid grid-cols-3 gap-4 px-4 w-full h-full ">
             {data.length > 0 ? (
                 data.map( data => ( 
